@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Cafe</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_food_item">Add Food Item</string>
+    <string name="choose_image">Choose Image</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="ver_a_imagem_que_estou_a_escolher">Ver a imagem que estou a escolher</string>
+    <string name="logo_eat_it">Logo Eat It</string>
+    <string name="logo_eat_it_desenho">logo_eat_it_desenho</string>
+    <string name="slogan">No matter where you are we will find you and we will feed you </string>
+    <string name="adicionar_comida">Adicionar Comida</string>
+    <string name="phone">Phone Number</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+</resources>
