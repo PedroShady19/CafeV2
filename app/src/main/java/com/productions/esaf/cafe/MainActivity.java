@@ -28,7 +28,7 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
     //Variaveis
     private Button btnLogin,btnSignUp;
-    private ImageView imageView;
+
 
     //Firebase
     FirebaseStorage storage;
@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         //Init View
         btnLogin=findViewById(R.id.btnLogin);
         btnSignUp=findViewById(R.id.btnSignUp);
-        imageView=findViewById(R.id.imageView);
 
 
         //Botao Login
