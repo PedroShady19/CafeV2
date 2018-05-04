@@ -6,4 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".AddFood">
 
+    <LinearLayout
+        android:id="@+id/layout_uploadingImage"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnChooseImage"
+            android:text="@string/choose_image"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:ignore="ButtonStyle" />
+        <Button
+            android:id="@+id/btnUploadImage"
+            android:text="Upload Image"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:ignore="ButtonStyle,HardcodedText" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/ver_a_imagem_que_estou_a_escolher" />
+
 </RelativeLayout>
