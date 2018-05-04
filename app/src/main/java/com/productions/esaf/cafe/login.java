@@ -1,6 +1,7 @@
 package com.productions.esaf.cafe;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.productions.esaf.cafe.Model.Utilizador;
+import com.productions.esaf.cafe.common.Common;
 
 public class login extends AppCompatActivity {
     EditText edtPhone,edtPassword;
@@ -49,8 +51,13 @@ public class login extends AppCompatActivity {
                             mDialog.dismiss();
                             Utilizador utilizador = dataSnapshot.child(edtPhone.getText().toString()).getValue(Utilizador.class);
                             if (utilizador.getPassword().equals(edtPassword.getText().toString())) {
-                                Toast.makeText(login.this, "Sign in successfully!", Toast.LENGTH_SHORT).show();
-                            } else {
+                                //Chamar o painel home do utilizador
+                                Intent homeIntent=new Intent(login.this,Home.class);
+                                Common.atualUtilizador=utilizador;
+                                startActivity(homeIntent);
+                                finish();
+                            }
+                            else {
                                 Toast.makeText(login.this, "Wrong Password!", Toast.LENGTH_SHORT).show();
                             }
                         }
