@@ -50,6 +50,8 @@ public class login extends AppCompatActivity {
                             //Get informação do utilizador
                             mDialog.dismiss();
                             Utilizador utilizador = dataSnapshot.child(edtPhone.getText().toString()).getValue(Utilizador.class);
+                            //Verificar se utilizador entra
+                            assert utilizador != null;
                             if (utilizador.getPassword().equals(edtPassword.getText().toString())) {
                                 //Chamar o painel home do utilizador
                                 Intent homeIntent=new Intent(login.this,Home.class);
