@@ -30,7 +30,7 @@ public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseDatabase database;
-    DatabaseReference category;
+    DatabaseReference Category;
 
     TextView txtFullName;
 
@@ -48,7 +48,7 @@ public class Home extends AppCompatActivity
 
         //Init Firebase
         database = FirebaseDatabase.getInstance();
-        category = database.getReference("Category");
+        Category = database.getReference("Categoria");
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +85,7 @@ public class Home extends AppCompatActivity
     }
 
     private void loadMenu() {
-        FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter =new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category) {
+        FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter =new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,Category) {
             @Override
             protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
             viewHolder.txtMenuName.setText(model.getName());
