@@ -1,5 +1,6 @@
 package com.productions.esaf.cafe;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -63,7 +64,10 @@ public class Food_list extends AppCompatActivity {
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(Food_list.this,""+local.getName(), Toast.LENGTH_SHORT).show();
+                        //Start new Activity
+                        Intent foodDetail = new Intent(Food_list.this,FoodDetail.class);
+                        foodDetail.putExtra("FoodId",adapter.getRef(position).getKey()); //Send food ID to new activity
+                        startActivity(foodDetail);
                     }
                 });
             }
