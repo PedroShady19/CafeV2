@@ -1,18 +1,27 @@
 package com.productions.esaf.cafe.Model;
 
 public class Food {
-    private String Name,Image,Description,Price,MenuId;
+    private String Name,Image,Description,Price,MenuId,Discount;
 
-    public Food(String name, String image, String description, String price, String menuId) {
+    public Food(String name, String image, String description, String price, String menuId,String discount) {
         Name = name;
         Image = image;
         Description = description;
         Price = price;
         MenuId = menuId;
+        Discount= discount;
     }
 
     public Food() {
 
+    }
+
+    public String getDiscount() {
+        return Discount;
+    }
+
+    public void setDiscount(String discount) {
+        Discount = discount;
     }
 
     public String getName() {
