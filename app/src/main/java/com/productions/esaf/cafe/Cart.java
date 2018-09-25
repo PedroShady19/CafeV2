@@ -9,10 +9,17 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.productions.esaf.cafe.Database.Database;
+import com.productions.esaf.cafe.Model.Order;
+import com.productions.esaf.cafe.ViewHolder.CartAdapter;
 
 import org.w3c.dom.Text;
 
-import info.hoang8f.widget.FButton;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 
 public class Cart extends AppCompatActivity {
 
@@ -23,7 +30,12 @@ public class Cart extends AppCompatActivity {
     DatabaseReference request;
 
     TextView txtTotalPrice;
-    FButton btnPlace;
+    Button btnPlace;
+
+    List<Order> cart= new ArrayList<>();
+
+    CartAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +51,25 @@ public class Cart extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         txtTotalPrice = (TextView)findViewById(R.id.total);
-        btnPlace= (FButton)findViewById(R.id.btnPlaceOrder);
+        btnPlace= findViewById(R.id.btnPlaceOrder);
 
         loadListFood();
     }
 
     private void loadListFood() {
+        cart= new Database(this).getCarts();
+        adapter= new CartAdapter(cart,this);
+        recyclerView.setAdapter(adapter);
+
+        //Calcular o preco total
+        int total=0;
+        for (Order order:cart)
+            total+=(Integer.parseInt(order.getFoodPrice()))*(Integer.parseInt(order.getQuantity()));
+        Locale locale = new Locale("en","US");
+        NumberFormat fmt=NumberFormat.getCurrencyInstance(locale);
+
+        txtTotalPrice.setText(fmt.format(total));
+
     }
+
 }

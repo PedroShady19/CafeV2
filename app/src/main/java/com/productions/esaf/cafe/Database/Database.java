@@ -12,18 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database extends SQLiteAssetHelper {
-    private static final String DB_NAME="cafev2DBSQL.db";
+    private static final String DB_NAME="cafev2DB.db";
     private static final int DB_VER=1;
     public Database(Context context) {
         super(context, DB_NAME,null,DB_VER);
     }
+
 
     public List<Order> getCarts()
     {
         SQLiteDatabase db=getReadableDatabase();
         SQLiteQueryBuilder qb= new SQLiteQueryBuilder();
 
-        String[] sqlSelect={"foodName","foodID","Quantity","foodPrice","Discount"};
+        String[] sqlSelect={"ProductName","ProductID","Quantity","Price","Discount"};
         String sqlTable="OrderDetail";
 
         qb.setTables(sqlTable);
@@ -33,10 +34,10 @@ public class Database extends SQLiteAssetHelper {
         if(c.moveToFirst())
         {
             do {
-                result.add(new Order(c.getString(c.getColumnIndex("foodID")),
-                        c.getString(c.getColumnIndex("foodName")),
+                result.add(new Order(c.getString(c.getColumnIndex("ProductID")),
+                        c.getString(c.getColumnIndex("ProductName")),
                         c.getString(c.getColumnIndex("Quantity")),
-                        c.getString(c.getColumnIndex("foodPrice")),
+                        c.getString(c.getColumnIndex("Price")),
                         c.getString(c.getColumnIndex("Discount"))
                 ));
             }while (c.moveToNext());
@@ -47,7 +48,7 @@ public class Database extends SQLiteAssetHelper {
     public void addToCart(Order order)
     {
         SQLiteDatabase db = getReadableDatabase();
-        String query = String.format("INSERT INTO OrderDetail(foodID,foodName,Quantity,foodPrice,Discount) VALUES('%s','%s','%s','%s','%s');",
+        String query = String.format("INSERT INTO OrderDetail(ProductID,ProductName,Quantity,Price,Discount) VALUES('%s','%s','%s','%s','%s');",
                 order.getFoodID(),order.getFoodName(),order.getQuantity(),order.getFoodPrice(),order.getDiscount());
         db.execSQL(query);
     }

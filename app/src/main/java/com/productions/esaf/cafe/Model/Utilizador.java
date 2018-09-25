@@ -8,10 +8,10 @@ public class Utilizador {
     public Utilizador() {
     }
 
-    public Utilizador(String name, String password, String phone) {
+    public Utilizador(String name, String password) {
         this.name = name;
         this.password = password;
-        this.phone = phone;
+
     }
 
     public String getPhone() {
