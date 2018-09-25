@@ -49,7 +49,7 @@
         <Button
             android:id="@+id/btnPlaceOrder"
             android:text="Place Order"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/darker_gray"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
             android:layout_alignParentBottom="true"
