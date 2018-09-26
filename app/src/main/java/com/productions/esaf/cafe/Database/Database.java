@@ -52,7 +52,7 @@ public class Database extends SQLiteAssetHelper {
                 order.getFoodID(),order.getFoodName(),order.getQuantity(),order.getFoodPrice(),order.getDiscount());
         db.execSQL(query);
     }
-    public void CleanCart()
+    public void cleanCart()
     {
         SQLiteDatabase db = getReadableDatabase();
         String query = String.format("DELETE FROM OrderDetail");
