@@ -11,10 +11,14 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.productions.esaf.cafe.Interface.ItemClickListener;
 import com.productions.esaf.cafe.Model.Food;
 import com.productions.esaf.cafe.ViewHolder.FoodViewHolder;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Food_list extends AppCompatActivity {
 
@@ -26,6 +30,12 @@ public class Food_list extends AppCompatActivity {
 
     String  categoriaId="";
     FirebaseRecyclerAdapter<Food,FoodViewHolder> adapter;
+
+    //Search Functionality
+    FirebaseRecyclerAdapter<Food,FoodViewHolder> searchAdapter;
+    List<String> suggestList= new ArrayList<>();
+    MaterialSearchBar materialSearchBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +57,15 @@ public class Food_list extends AppCompatActivity {
         {
             loadlistFood(categoriaId);
         }
+        //Search Bar Functionality
+        materialSearchBar=(MaterialSearchBar)findViewById(R.id.searchBar);
+        materialSearchBar.setHint("Search your food name");
+
+        loadSuggest();
+    }
+
+    private void loadSuggest() {
+        
     }
 
     private void loadlistFood(String categoriaId) {
