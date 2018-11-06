@@ -4,6 +4,7 @@ public class Utilizador {
     private String name;
     private String password;
     private String phone;
+    private String IsStaff;
 
     public Utilizador() {
     }
@@ -11,7 +12,16 @@ public class Utilizador {
     public Utilizador(String name, String password) {
         this.name = name;
         this.password = password;
+        this.IsStaff ="false";
 
+    }
+
+    public String getIsStaff() {
+        return IsStaff;
+    }
+
+    public void setIsStaff(String isStaff) {
+        IsStaff = isStaff;
     }
 
     public String getPhone() {
