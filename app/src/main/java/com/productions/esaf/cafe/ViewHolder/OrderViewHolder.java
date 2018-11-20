@@ -15,10 +15,10 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     public OrderViewHolder(View itemView) {
         super(itemView);
-        txtOrderAddress = (TextView)itemView.findViewById(R.id.order_address);
-        txtOrderPhone = (TextView)itemView.findViewById(R.id.order_phone);
-        txtOrderId = (TextView)itemView.findViewById(R.id.order_id);
-        txtOrderStatus = (TextView)itemView.findViewById(R.id.order_status);
+        txtOrderAddress = itemView.findViewById(R.id.order_address);
+        txtOrderPhone = itemView.findViewById(R.id.order_phone);
+        txtOrderId = itemView.findViewById(R.id.order_id);
+        txtOrderStatus = itemView.findViewById(R.id.order_status);
 
         itemView.setOnClickListener(this);
     }

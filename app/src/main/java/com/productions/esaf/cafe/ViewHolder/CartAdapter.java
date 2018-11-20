@@ -11,13 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.productions.esaf.cafe.Cart;
 import com.productions.esaf.cafe.Interface.ItemClickListener;
 import com.productions.esaf.cafe.Model.Order;
 import com.productions.esaf.cafe.R;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,11 +30,11 @@ class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
         this.txt_cart_name = txt_cart_name;
     }
 
-    public CartViewHolder(View itemView) {
+    CartViewHolder(View itemView) {
         super(itemView);
-        txt_cart_name= (TextView)itemView.findViewById(R.id.cart_item_name);
-        txt_price= (TextView)itemView.findViewById(R.id.cart_item_price);
-        img_cart_count= (ImageView)itemView.findViewById(R.id.cart_item_count);
+        txt_cart_name= itemView.findViewById(R.id.cart_item_name);
+        txt_price= itemView.findViewById(R.id.cart_item_price);
+        img_cart_count= itemView.findViewById(R.id.cart_item_count);
 
     }
 
@@ -47,7 +45,7 @@ class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 }
 
 public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
-    private List<Order> listData = new ArrayList<>();
+    private List<Order> listData;
     private Context context;
 
     public CartAdapter(List<Order> listData, Context context) {

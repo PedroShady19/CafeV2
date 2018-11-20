@@ -20,9 +20,6 @@ import com.productions.esaf.cafe.Model.Order;
 import com.productions.esaf.cafe.Model.Request;
 import com.productions.esaf.cafe.ViewHolder.CartAdapter;
 import com.productions.esaf.cafe.common.Common;
-
-import org.w3c.dom.Text;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,12 +50,12 @@ public class Cart extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         requests=database.getReference("Requests");
         //Init
-        recyclerView =(RecyclerView)findViewById(R.id.listCart);
+        recyclerView =findViewById(R.id.listCart);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        txtTotalPrice = (TextView)findViewById(R.id.total);
+        txtTotalPrice = findViewById(R.id.total);
         btnPlace= findViewById(R.id.btnPlaceOrder);
 
         btnPlace.setOnClickListener(new View.OnClickListener() {
