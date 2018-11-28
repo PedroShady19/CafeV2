@@ -4,10 +4,12 @@ package com.productions.esaf.cafe;
         import android.os.Bundle;
         import android.support.v7.widget.LinearLayoutManager;
         import android.support.v7.widget.RecyclerView;
+        import android.view.View;
 
         import com.firebase.ui.database.FirebaseRecyclerAdapter;
         import com.google.firebase.database.DatabaseReference;
         import com.google.firebase.database.FirebaseDatabase;
+        import com.productions.esaf.cafe.Interface.ItemClickListener;
         import com.productions.esaf.cafe.Model.Request;
         import com.productions.esaf.cafe.ViewHolder.OrderViewHolder;
         import com.productions.esaf.cafe.common.Common;
@@ -40,11 +42,14 @@ public class OrderStatus extends AppCompatActivity {
         if(getIntent()==null)
         loadOrders(Common.atualUtilizador.getPhone());
         else
-            loadOrders(getIntent().getStringExtra("userPhone"));
+            loadOrders(Common.atualUtilizador.getPhone());
     }
 
     private void loadOrders(String phone) {
-        adapter = new FirebaseRecyclerAdapter<Request, OrderViewHolder>(Request.class,R.layout.order_layout,OrderViewHolder.class,requests.orderByChild("phone").equalTo(phone)) {
+        adapter = new FirebaseRecyclerAdapter<Request, OrderViewHolder>(Request.class,
+                R.layout.order_layout,
+                OrderViewHolder.class,
+                requests.orderByChild("phone").equalTo(phone)) {
             @Override
             protected void populateViewHolder(OrderViewHolder viewHolder, Request model, int position) {
                 viewHolder.txtOrderId.setText(adapter.getRef(position).getKey());
@@ -52,8 +57,15 @@ public class OrderStatus extends AppCompatActivity {
                 viewHolder.txtOrderAddress.setText((model.getAddress()));
                 viewHolder.txtOrderPhone.setText(model.getPhone());
 
+                viewHolder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        //Para nao dar crash
+                    }
+                });
             }
         };
+        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
 
