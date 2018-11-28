@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.productions.esaf.cafe.Interface.ItemClickListener;
 import com.productions.esaf.cafe.Model.Category;
 
+import com.productions.esaf.cafe.Service.ListenOrder;
 import com.productions.esaf.cafe.ViewHolder.MenuViewHolder;
 import com.productions.esaf.cafe.common.Common;
 import com.squareup.picasso.Picasso;
@@ -82,6 +83,10 @@ public class Home extends AppCompatActivity
         recycler_menu.setLayoutManager(layoutManager);
 
         loadMenu();
+
+        //Registar Service
+        Intent service = new Intent(Home.this, ListenOrder.class);
+        startService(service);
 
 
     }
