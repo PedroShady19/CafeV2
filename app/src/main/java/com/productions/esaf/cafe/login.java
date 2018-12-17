@@ -36,45 +36,48 @@ public class login extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Common.isConnectedToInternet(getBaseContext())) {
 
-                final ProgressDialog mDialog=new ProgressDialog(login.this);
-                mDialog.setMessage("Please wait....");
-                mDialog.show();
+                    final ProgressDialog mDialog = new ProgressDialog(login.this);
+                    mDialog.setMessage("Please wait....");
+                    mDialog.show();
 
-                table_user.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //Verificar se o utilizador existe na Firebase
-                        if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
-                            //Get informação do utilizador
-                            mDialog.dismiss();
-                            Utilizador utilizador = dataSnapshot.child(edtPhone.getText().toString()).getValue(Utilizador.class);
-                            //Verificar se utilizador entra
-                            assert utilizador != null;
-                            utilizador.setPhone(edtPhone.getText().toString());//ir buscar o numero de telemovel
-                            if (utilizador.getPassword().equals(edtPassword.getText().toString())) {
-                                //Chamar o painel home do utilizador
-                                Intent homeIntent=new Intent(login.this,Home.class);
-                                Common.atualUtilizador=utilizador;
-                                startActivity(homeIntent);
-                                finish();
-                            }
-                            else {
-                                Toast.makeText(login.this, "Wrong Password!", Toast.LENGTH_SHORT).show();
+                    table_user.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //Verificar se o utilizador existe na Firebase
+                            if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
+                                //Get informação do utilizador
+                                mDialog.dismiss();
+                                Utilizador utilizador = dataSnapshot.child(edtPhone.getText().toString()).getValue(Utilizador.class);
+                                //Verificar se utilizador entra
+                                assert utilizador != null;
+                                utilizador.setPhone(edtPhone.getText().toString());//ir buscar o numero de telemovel
+                                if (utilizador.getPassword().equals(edtPassword.getText().toString())) {
+                                    //Chamar o painel home do utilizador
+                                    Intent homeIntent = new Intent(login.this, Home.class);
+                                    Common.atualUtilizador = utilizador;
+                                    startActivity(homeIntent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(login.this, "Wrong Password!", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                mDialog.dismiss();
+                                Toast.makeText(login.this, "Utilizador não existe na base de dados", Toast.LENGTH_SHORT).show();
                             }
                         }
-                        else
-                        {
-                            mDialog.dismiss();
-                            Toast.makeText(login.this, "Utilizador não existe na base de dados", Toast.LENGTH_SHORT).show();
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                    });
+                }
+                else
+                {
+                    Toast.makeText(login.this, "Please Check your internet connection", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
