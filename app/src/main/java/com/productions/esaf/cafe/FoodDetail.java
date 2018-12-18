@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.productions.esaf.cafe.Database.Database;
 import com.productions.esaf.cafe.Model.Food;
 import com.productions.esaf.cafe.Model.Order;
+import com.productions.esaf.cafe.common.Common;
 import com.squareup.picasso.Picasso;
 
 public class FoodDetail extends AppCompatActivity {
@@ -71,7 +72,13 @@ public class FoodDetail extends AppCompatActivity {
             foodID=getIntent().getStringExtra("foodId");
         if(!foodID.isEmpty())
         {
-            getDetailFood(foodID);
+            if(Common.isConnectedToInternet(getBaseContext()))
+                getDetailFood(foodID);
+            else
+            {
+                Toast.makeText(FoodDetail.this, "Please check your connection", Toast.LENGTH_SHORT).show();
+                
+            }
         }
     }
 

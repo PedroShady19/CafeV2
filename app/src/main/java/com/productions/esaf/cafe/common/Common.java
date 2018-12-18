@@ -19,6 +19,7 @@ public class Common {
             return "Enviado";
     }
 
+    public static final String DELETE = "Delete";
     public static boolean isConnectedToInternet (Context context)
     {
         ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);

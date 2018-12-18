@@ -20,6 +20,7 @@ import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.productions.esaf.cafe.Interface.ItemClickListener;
 import com.productions.esaf.cafe.Model.Food;
 import com.productions.esaf.cafe.ViewHolder.FoodViewHolder;
+import com.productions.esaf.cafe.common.Common;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -60,7 +61,12 @@ public class Food_list extends AppCompatActivity {
             categoriaId= getIntent().getStringExtra("CategoriaId");
         if(!categoriaId.isEmpty())
         {
+            if(Common.isConnectedToInternet(getBaseContext()))
             loadlistFood(categoriaId);
+            else
+            {
+                Toast.makeText(this, "Please check your connection", Toast.LENGTH_SHORT).show();
+            }
         }
         //Search Bar Functionality
         materialSearchBar=findViewById(R.id.searchBar);
