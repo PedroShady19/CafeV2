@@ -29,6 +29,8 @@ import com.productions.esaf.cafe.ViewHolder.MenuViewHolder;
 import com.productions.esaf.cafe.common.Common;
 import com.squareup.picasso.Picasso;
 
+import io.paperdb.Paper;
+
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -54,6 +56,8 @@ public class Home extends AppCompatActivity
         //Init Firebase
         database = FirebaseDatabase.getInstance();
         Category = database.getReference("Categoria");
+
+        Paper.init(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +170,12 @@ public class Home extends AppCompatActivity
 
 
         } else if (id == R.id.nav_log_out) {
+            //Delete Remember user && password
+            Paper.book().destroy();
+
+
             //Logout
+
             Intent signOut = new Intent(Home.this,login.class);
                     signOut.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(signOut);

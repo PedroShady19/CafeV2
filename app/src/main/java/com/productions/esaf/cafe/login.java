@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,9 +18,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.productions.esaf.cafe.Model.Utilizador;
 import com.productions.esaf.cafe.common.Common;
 
+import io.paperdb.Paper;
+
 public class login extends AppCompatActivity {
     EditText edtPhone,edtPassword;
     Button btnSignIn;
+    CheckBox checkBoxRemember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,9 @@ public class login extends AppCompatActivity {
         edtPassword=findViewById(R.id.edtPassword);
         edtPhone=findViewById(R.id.edtPhone);
         btnSignIn=findViewById(R.id.btnSignIn);
+        checkBoxRemember = findViewById(R.id.checkbox_RememberMe);
+        //Paper
+        Paper.init(this);
         //Inicializar a Firebase
         FirebaseDatabase database=FirebaseDatabase.getInstance();
         final DatabaseReference table_user=database.getReference("User");
@@ -37,6 +44,13 @@ public class login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (Common.isConnectedToInternet(getBaseContext())) {
+
+                    //Guardar dados utilizador checkbox
+                    if(checkBoxRemember.isChecked())
+                    {
+                        Paper.book().write(Common.USER_KEY,edtPhone.getText().toString());
+                        Paper.book().write(Common.PWD_KEY,edtPassword.getText().toString());
+                    }
 
                     final ProgressDialog mDialog = new ProgressDialog(login.this);
                     mDialog.setMessage("Please wait....");
