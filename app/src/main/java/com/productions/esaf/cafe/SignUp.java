@@ -18,7 +18,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class SignUp extends AppCompatActivity {
 
-    MaterialEditText edtPhone,edtName,edtPassword;
+    MaterialEditText edtPhone,edtName,edtPassword,edtSecureCode;
     Button btnSignUp;
 
     @Override
@@ -29,6 +29,7 @@ public class SignUp extends AppCompatActivity {
         edtName= findViewById(R.id.edtName);
         edtPhone= findViewById(R.id.edtPhone);
         edtPassword= findViewById(R.id.edtPassword);
+        edtSecureCode = findViewById(R.id.edtSecureCode);
 
         btnSignUp=findViewById(R.id.btnSignUp);
         //inicializar Firebase
@@ -52,7 +53,9 @@ public class SignUp extends AppCompatActivity {
                                 Toast.makeText(SignUp.this, "Phone Number already exists!", Toast.LENGTH_SHORT).show();
                             } else {
                                 mDialog.dismiss();
-                                Utilizador utilizador = new Utilizador(edtName.getText().toString(), edtPassword.getText().toString());
+                                Utilizador utilizador = new Utilizador(edtName.getText().toString(),
+                                        edtPassword.getText().toString(),
+                                        edtSecureCode.getText().toString());
                                 table_user.child(edtPhone.getText().toString()).setValue(utilizador);
                                 Toast.makeText(SignUp.this, "Registered sucessfully!", Toast.LENGTH_SHORT).show();
                                 finish();

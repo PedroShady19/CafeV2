@@ -49,17 +49,32 @@
             app:met_singleLineEllipsis="true"
             />
 
-        <CheckBox
-            android:id="@+id/checkbox_RememberMe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Material.Drawable.CheckBox"
-            android:text="Remember Me"
-            android:gravity="center_vertical"
-            android:textColor="@android:color/white"
-            app:cbd_strokeColor="@color/white"
-            app:cbd_tickColor="@color/transparentBlack"
-            />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/checkbox_RememberMe"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="@style/Material.Drawable.CheckBox"
+                android:text="Remember Me"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/white"
+                app:cbd_strokeColor="@color/white"
+                app:cbd_tickColor="@color/transparentBlack"
+                />
+
+            <TextView
+                android:id="@+id/txtForgotPassword"
+                android:textColor="@android:color/white"
+                android:text="@string/forgot_pwd"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
     </LinearLayout>
 

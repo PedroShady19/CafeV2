@@ -5,15 +5,25 @@ public class Utilizador {
     private String password;
     private String phone;
     private String IsStaff;
+    private String secureCode;
 
     public Utilizador() {
     }
 
-    public Utilizador(String name, String password) {
+    public Utilizador(String name, String password,String secureCode) {
         this.name = name;
         this.password = password;
         this.IsStaff ="false";
+        this.secureCode = secureCode;
 
+    }
+
+    public String getSecureCode() {
+        return secureCode;
+    }
+
+    public void setSecureCode(String secureCode) {
+        this.secureCode = secureCode;
     }
 
     public String getIsStaff() {
