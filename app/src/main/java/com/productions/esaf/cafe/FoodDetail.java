@@ -113,6 +113,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                 for(DataSnapshot postSnapshot:dataSnapshot.getChildren())
                 {
                     Rating item=postSnapshot.getValue(Rating.class);
+                    assert item != null;
                     sum+=Integer.parseInt(item.getRatingValue());
                     count++;
                 }
@@ -179,8 +180,8 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     @Override
     public void onPositiveButtonClicked(int value, String comments) {
         //Get Rating
-        final Rating rating= new Rating(Common.atualUtilizador.getPhone(),foodID,String.valueOf(value),
-                comments);
+        final Rating rating= new Rating(Common.atualUtilizador.getPhone(),foodID,String.valueOf(comments),
+                String.valueOf(value));
         ratingTbl.child(Common.atualUtilizador.getPhone()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
