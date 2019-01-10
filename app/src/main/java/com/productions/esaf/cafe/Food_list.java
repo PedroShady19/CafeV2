@@ -149,12 +149,9 @@ public class Food_list extends AppCompatActivity {
                     }
                 });
             }
-
         };
         recyclerView.setAdapter(searchAdapter);
     }
-
-
     private void loadSuggest() {
         foodList.orderByChild("menuId").equalTo(categoriaId)
                 .addValueEventListener(new ValueEventListener() {
@@ -173,7 +170,6 @@ public class Food_list extends AppCompatActivity {
 
                     }
                 });
-        
     }
 
     private void loadlistFood(String categoriaId) {
@@ -208,7 +204,6 @@ public class Food_list extends AppCompatActivity {
                         }
                     }
                 });
-
                 final Food local=model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
