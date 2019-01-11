@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,8 @@ import com.productions.esaf.cafe.Model.Order;
 import com.productions.esaf.cafe.Model.Request;
 import com.productions.esaf.cafe.ViewHolder.CartAdapter;
 import com.productions.esaf.cafe.common.Common;
+import com.rengwuxian.materialedittext.MaterialEditText;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,13 +82,13 @@ public class Cart extends AppCompatActivity {
         alertDialog.setTitle("Apenas mais um passo!");
         alertDialog.setMessage("Coloque a sua morada: ");
 
-        final EditText edtAdress = new EditText (Cart.this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
+        LayoutInflater inflater= this.getLayoutInflater();
+        View order_adress_comment= inflater.inflate(R.layout.order_adress_comment,null);
 
-                edtAdress.setLayoutParams(lp);
-                alertDialog.setView(edtAdress);// adicionar edit Text ao Alert Dialog
+        final MaterialEditText edtAdress = order_adress_comment.findViewById(R.id.edtAdress);
+        final MaterialEditText edtComment = order_adress_comment.findViewById(R.id.edtComment);
+
+                alertDialog.setView(order_adress_comment);
                 alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -97,6 +100,8 @@ public class Cart extends AppCompatActivity {
                                 Common.atualUtilizador.getName(),
                                 edtAdress.getText().toString(),
                                 txtTotalPrice.getText().toString(),
+                                "0",//status
+                                edtComment.getText().toString(),
                                 cart
                         );
 
