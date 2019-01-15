@@ -21,10 +21,11 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.productions.esaf.cafe.Interface.ItemClickListener;
 import com.productions.esaf.cafe.Model.Category;
 
-import com.productions.esaf.cafe.Service.ListenOrder;
+import com.productions.esaf.cafe.Model.Token;
 import com.productions.esaf.cafe.ViewHolder.MenuViewHolder;
 import com.productions.esaf.cafe.common.Common;
 import com.squareup.picasso.Picasso;
@@ -98,10 +99,16 @@ public class Home extends AppCompatActivity
 
 
         //Registar Service
-        Intent service = new Intent(Home.this, ListenOrder.class);
-        startService(service);
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
 
+    }
+
+    private void updateToken(String token) {
+        FirebaseDatabase db= FirebaseDatabase.getInstance();
+        DatabaseReference tokens=db.getReference("Tokens");
+        Token data = new Token(token,false); //false cause this is from client side
+        tokens.child(Common.atualUtilizador.getPhone()).setValue(data);
     }
 
     private void loadMenu() {

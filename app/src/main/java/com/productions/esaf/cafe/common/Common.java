@@ -6,9 +6,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.productions.esaf.cafe.Model.Utilizador;
+import com.productions.esaf.cafe.Remote.APIService;
+import com.productions.esaf.cafe.Remote.RetrofitClient;
 
 public class Common {
     public static Utilizador atualUtilizador;
+    private static final String BASE_URL = "https://fcm.googleapis.com/";
+    public static APIService getFCMService()
+    {
+        return RetrofitClient.getClient(BASE_URL).create(APIService.class);
+    }
 
     public static String convertCodeToStatus(String status) {
         if("0".equals(status))
