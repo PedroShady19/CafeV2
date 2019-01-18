@@ -73,7 +73,7 @@ public class login extends AppCompatActivity {
                     mDialog.setMessage("Please wait....");
                     mDialog.show();
 
-                    table_user.addValueEventListener(new ValueEventListener() {
+                    table_user.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             //Verificar se o utilizador existe na Firebase
@@ -90,6 +90,8 @@ public class login extends AppCompatActivity {
                                     Common.atualUtilizador = utilizador;
                                     startActivity(homeIntent);
                                     finish();
+
+                                    table_user.removeEventListener(this);
                                 } else {
                                     Toast.makeText(login.this, "Wrong Password!", Toast.LENGTH_SHORT).show();
                                 }

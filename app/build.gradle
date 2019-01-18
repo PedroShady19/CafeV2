@@ -25,6 +25,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+
     implementation 'com.google.firebase:firebase-messaging:11.8.0'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
@@ -48,6 +49,7 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'info.hoang8f:android-segmented:1.0.6'
     implementation 'io.paperdb:paperdb:2.1'
+    implementation 'com.github.d-max:spots-dialog:0.7@aar'
     implementation 'com.github.rey5137:material:1.2.4'
 
 
