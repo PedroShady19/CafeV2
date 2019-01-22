@@ -1,23 +1,49 @@
 package com.productions.esaf.cafe.Service;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.productions.esaf.cafe.Helper.NotificationHelper;
 import com.productions.esaf.cafe.MainActivity;
+import com.productions.esaf.cafe.OrderStatus;
 import com.productions.esaf.cafe.R;
+import com.productions.esaf.cafe.common.Common;
+
+import java.util.Random;
 
 public class MyFirebaseMessaging extends FirebaseMessagingService{
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        sendNotification(remoteMessage);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
+            sendNotificationAPI26(remoteMessage);
+        else
+            sendNotification(remoteMessage);
+    }
+
+    private void sendNotificationAPI26(RemoteMessage remoteMessage) {
+        RemoteMessage.Notification notification = remoteMessage.getNotification();
+        String title=notification.getTitle();
+        String content=notification.getBody();
+        //Same as below
+        Intent intent = new Intent(this, OrderStatus.class);
+        intent.putExtra(Common.PHONE_TEXT, Common.atualUtilizador.getPhone());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent =PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
+        Uri defaultUriSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationHelper helper = new NotificationHelper(this);
+        Notification.Builder builder = helper.getCafeV2ChannelNotification(title,content,pendingIntent,defaultUriSound);
+        //Random ID for notification
+        helper.getManager().notify(new Random().nextInt(),builder.build());
     }
 
     private void sendNotification(RemoteMessage remoteMessage) {

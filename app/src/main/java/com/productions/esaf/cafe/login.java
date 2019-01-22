@@ -140,7 +140,7 @@ public class login extends AppCompatActivity {
                         Utilizador user = dataSnapshot.child(edtPhone.getText().toString())
                                 .getValue(Utilizador.class);
                         if(user.getSecureCode().equals(edtSecureCode.getText().toString()))
-                            Toast.makeText(login.this, "Your password"+user.getPassword(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(login.this, "Your password is: "+user.getPassword(),Toast.LENGTH_LONG).show();
                         else
                             Toast.makeText(login.this, "Wrong Secure Code", Toast.LENGTH_SHORT).show();
                     }

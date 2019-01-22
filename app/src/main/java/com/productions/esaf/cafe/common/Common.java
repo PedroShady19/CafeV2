@@ -11,6 +11,7 @@ import com.productions.esaf.cafe.Remote.RetrofitClient;
 
 public class Common {
     public static Utilizador atualUtilizador;
+    public static String PHONE_TEXT= "userPhone";
     private static final String BASE_URL = "https://fcm.googleapis.com/";
     public static APIService getFCMService()
     {

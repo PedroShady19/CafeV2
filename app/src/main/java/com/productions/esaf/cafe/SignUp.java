@@ -50,14 +50,13 @@ public class SignUp extends AppCompatActivity {
                             //check if phone number exists
                             if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
                                 mDialog.dismiss();
-                                Toast.makeText(SignUp.this, "Phone Number already exists!", Toast.LENGTH_SHORT).show();
                             } else {
                                 mDialog.dismiss();
                                 Utilizador utilizador = new Utilizador(edtName.getText().toString(),
                                         edtPassword.getText().toString(),
                                         edtSecureCode.getText().toString());
                                 table_user.child(edtPhone.getText().toString()).setValue(utilizador);
-                                Toast.makeText(SignUp.this, "Registered sucessfully!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUp.this, "Don't forget your secure code", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
 
