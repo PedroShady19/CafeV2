@@ -1,6 +1,9 @@
 package com.productions.esaf.cafe;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +25,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.productions.esaf.cafe.Database.Database;
 import com.productions.esaf.cafe.Model.MyResponse;
 import com.productions.esaf.cafe.Model.Notification;
@@ -32,8 +40,13 @@ import com.productions.esaf.cafe.Model.Token;
 import com.productions.esaf.cafe.Remote.APIService;
 import com.productions.esaf.cafe.ViewHolder.CartAdapter;
 import com.productions.esaf.cafe.common.Common;
+import com.productions.esaf.cafe.common.Config;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +59,7 @@ import retrofit2.Response;
 
 public class Cart extends AppCompatActivity {
 
+    private static final int PAYPAL_REQUEST_CODE = 9999;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
@@ -60,10 +74,20 @@ public class Cart extends AppCompatActivity {
 
     APIService mService;
 
+    //PayPal payment
+    static PayPalConfiguration config = new PayPalConfiguration()
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)// sandbox porque é um teste
+            .clientId(Config.PAYPAL_CLIENT_ID);
+    String address,comment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        //Init Paypal
+        Intent intent = new Intent(this, PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
+        startService(intent);
+
         //Init Service
         mService = Common.getFCMService();
 
@@ -111,14 +135,68 @@ public class Cart extends AppCompatActivity {
                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
                         //Criar novo Request
+
+                        //Show PayPal to payment
+
+                        // morada e comment
+                        address = edtAdress.getText().toString();
+                        comment = edtComment.getText().toString();
+
+                        String formatAmount = txtTotalPrice.getText().toString()
+                                .replace("$","")
+                                .replace(",","");
+
+
+                        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(formatAmount),
+                                "USD",
+                                "Food On Wheels",
+                                PayPalPayment.PAYMENT_INTENT_SALE);
+                        Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
+                        intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
+                        startActivityForResult(intent,PAYPAL_REQUEST_CODE);
+
+
+                        /*
+
+
+                    */}
+
+                });
+
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                alertDialog.show();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode== PAYPAL_REQUEST_CODE)
+        {
+            if(resultCode== RESULT_OK)
+            {
+                PaymentConfirmation confirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                if(confirmation!= null)
+                {
+                    try{
+                        String paymentDetail = confirmation.toJSONObject().toString(4);
+                        JSONObject jsonObject = new JSONObject(paymentDetail);
+
                         Request request = new Request(
                                 Common.atualUtilizador.getPhone(),
                                 Common.atualUtilizador.getName(),
-                                edtAdress.getText().toString(),
+                                address,
                                 txtTotalPrice.getText().toString(),
                                 "0",//status
-                                edtComment.getText().toString(),
+                                comment,
+                                jsonObject.getJSONObject("response").getString("state"),
                                 cart
                         );
 
@@ -132,17 +210,18 @@ public class Cart extends AppCompatActivity {
 
                         sendNotificationOrder(order_number);
 
-                    }
+                        Toast.makeText(this, "Thank you, Order Place", Toast.LENGTH_SHORT).show();
 
-                });
-                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                });
-                alertDialog.show();
-
+                }
+            }
+            else if(resultCode== Activity.RESULT_CANCELED)
+                Toast.makeText(this, "Payment Cancel", Toast.LENGTH_SHORT).show();
+            else if(resultCode==PaymentActivity.RESULT_EXTRAS_INVALID)
+                Toast.makeText(this, "Invalid Payment", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void sendNotificationOrder(final String order_number) {

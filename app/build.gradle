@@ -47,6 +47,8 @@ dependencies {
     implementation 'com.github.d-max:spots-dialog:0.7@aar'
     implementation 'com.github.rey5137:material:1.2.4'
     implementation 'com.google.android.gms:play-services:12.0.1'
+    //PAYPAl
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.15.3'
     //Firebase
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
     implementation 'com.google.firebase:firebase-core:16.0.6'

@@ -23,6 +23,10 @@ import com.productions.esaf.cafe.Model.Utilizador;
 import com.productions.esaf.cafe.common.Common;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
 import io.paperdb.Paper;
 
 public class login extends AppCompatActivity {
@@ -75,7 +79,7 @@ public class login extends AppCompatActivity {
 
                     table_user.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                             //Verificar se o utilizador existe na Firebase
                             if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
                                 //Get informação do utilizador
@@ -137,14 +141,13 @@ public class login extends AppCompatActivity {
                 table_user.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Utilizador user = dataSnapshot.child(edtPhone.getText().toString())
+                        Utilizador user = dataSnapshot.child(Objects.requireNonNull(edtPhone.getText()).toString())
                                 .getValue(Utilizador.class);
-                        if(user.getSecureCode().equals(edtSecureCode.getText().toString()))
+                        if(Objects.requireNonNull(user).getSecureCode().equals(Objects.requireNonNull(edtSecureCode.getText()).toString()))
                             Toast.makeText(login.this, "Your password is: "+user.getPassword(),Toast.LENGTH_LONG).show();
                         else
                             Toast.makeText(login.this, "Wrong Secure Code", Toast.LENGTH_SHORT).show();
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 

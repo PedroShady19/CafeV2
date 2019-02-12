@@ -38,8 +38,11 @@ import com.productions.esaf.cafe.common.Common;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import dmax.dialog.SpotsDialog;
 import io.paperdb.Paper;
@@ -130,8 +133,7 @@ public class Home extends AppCompatActivity
             viewHolder.txtMenuName.setText(model.getName());
             Picasso.with(getBaseContext()).load(model.getImagem()).into(viewHolder.imageView);
 
-            final Category clickItem = model;
-            viewHolder.setItemClickListener(new ItemClickListener() {
+                viewHolder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onClick(View view, int position, boolean isLongClick) {
                     //Get CategoryId and send to new activity
@@ -173,7 +175,7 @@ public class Home extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NotNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -232,9 +234,9 @@ public class Home extends AppCompatActivity
                 final android.app.AlertDialog waitingDialog = new SpotsDialog(Home.this);
                 waitingDialog.show();
                 //Check old password
-                if(edtPassword.getText().toString().equals(Common.atualUtilizador.getPassword()))
+                if(Objects.requireNonNull(edtPassword.getText()).toString().equals(Common.atualUtilizador.getPassword()))
                 {
-                    if(edtNewPassword.getText().toString().equals(edtRepeatPassword.getText().toString()))
+                    if(Objects.requireNonNull(edtNewPassword.getText()).toString().equals(Objects.requireNonNull(edtRepeatPassword.getText()).toString()))
                     {
                         Map<String,Object> passwordUpdate = new HashMap<>();
                         passwordUpdate.put("password",edtNewPassword.getText().toString());
