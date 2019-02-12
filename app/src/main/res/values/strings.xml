@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cafe</string>
+    <string name="app_name">Food On Wheels</string>
     <string name="action_settings">Settings</string>
     <string name="add_food_item">Add Food Item</string>
     <string name="choose_image">Choose Image</string>
